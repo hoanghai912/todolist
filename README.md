@@ -1,8 +1,34 @@
-# React + Vite
+# Project Name
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is my Todo List.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [About the Project](#about-the-project)
+- [Getting Started](#getting-started)
+
+## About the Project
+
+This project is writen by ReactJS with ViteJS. This is my pet project. You can "Create", "Read", "Update", "Delete" any task in this application. Backend of this project is operated by Json-server
+
+## Getting Started
+
+### Clone this project
+```
+git clone ...
+```
+
+### Install
+```
+yarn installl
+```
+
+### Run the server
+```
+yarn run server
+```
+
+### Run the Application
+```
+yarn run dev
+```
