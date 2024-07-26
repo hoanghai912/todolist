@@ -9,8 +9,6 @@ import
   CheckCircleIcon,
   UserCircleIcon,
   Cog6ToothIcon,
-  ClockIcon,
-  BriefcaseIcon,
   PlusCircleIcon
 } from "@heroicons/react/24/outline"
 
@@ -22,7 +20,7 @@ const Menu = (props) => {
   return (
     <div className='p-4 justify-center'>
       <div className='flex items-center'>
-        <UserCircleIcon className='w-16 h-16 mx-3'/>
+        <UserCircleIcon className='w-16 h-16 mx-3 opacity-60'/>
         <div>
           <p>Do-it</p>
           <p className='text-purple-500 font-semibold'>Welcoming to Todo List</p>
@@ -138,6 +136,8 @@ const InputTask = (props) => {
 }
 
 const Todo = (props) => {
+  const [showEdit, setShowEdit] = useState(false)
+
   const todo = props.todo
   const styleComplete = {
     textDecoration: 'line-through',
@@ -153,7 +153,18 @@ const Todo = (props) => {
 
   return (
     <>
-      <div style={todo.complete ?styleComplete:null} className='w-4/5 p-4 bg-white rounded-2xl m-2 grid grid-cols-[5%_60%_auto_auto] gap-x-2 items-center'>
+      {showEdit && <EditModal showEdit={showEdit} setShowEdit={setShowEdit} todo={todo}
+                              setTodoValue={props.setTodoValue}
+                              setTime={props.setTime}
+                              setDate={props.setDate}
+                              setCategory={props.setCategory}
+                              handleUpdateTodo={props.handleUpdateTodo}
+                              handleDeleteTodo={props.handleDeleteTodo}/>}
+
+      <div style={todo.complete ?styleComplete:null} 
+        className='w-4/5 p-4 bg-white rounded-2xl m-2 grid grid-cols-[5%_60%_auto_auto] gap-x-2 items-center'
+        onClick={() => setShowEdit(!showEdit)}
+      >
         <div className={`${handleCategory(todo)} justify-self-center w-4 h-4 rounded-full`}></div>
         <div>{todo.title}</div>
         <div className=''>{todo.time}</div>
@@ -186,12 +197,106 @@ const Container = (props) => {
         />
     
         <div className='flex flex-col items-center'>
-          {props.todos.map(todo => <Todo key={todo.id} todo={todo} handleToggleComplete={props.handleToggleComplete}/>)}
+          {props.todos.map(todo => <Todo key={todo.id} todo={todo} 
+                                        handleToggleComplete={props.handleToggleComplete}
+                                        setTodoValue={props.setTodoValue}
+                                        setTime={props.setTime}
+                                        setDate={props.setDate}
+                                        setCategory={props.setCategory}
+                                        handleUpdateTodo={props.handleUpdateTodo}
+                                        handleDeleteTodo={props.handleDeleteTodo}
+                                    />)}
         </div>
       </div>
     </>
   )
   
+}
+
+const EditModal = (props) => {
+
+  useEffect(() => {
+    props.setTodoValue(props.todo.title)
+    props.setTime(props.todo.time)
+    props.setDate(props.todo.date)
+    props.setCategory(props.todo.category)
+  }, [])
+
+  const handleToggleModal = () => {
+    const newState = !props.showEdit
+    props.setShowEdit(newState)
+    props.setTodoValue('')
+  }
+
+  const handleSave = () => {
+    props.handleUpdateTodo(props.todo)
+    handleToggleModal()
+  }
+
+  const handleDelete = (id) => {
+    const confirmation = window.confirm('Delete this todo?')
+    if (confirmation) {
+      props.handleDeleteTodo(id)
+      handleToggleModal()
+    }
+  } 
+
+  return (
+    <div className='w-screen h-screen fixed top-0 left-0 flex justify-center items-center'>
+      <div className='absolute w-1/2 h-fit bg-white z-10 rounded-2xl ps-4 pe-4 pb-4'>
+        <div className='flex justify-between mt-4 items-center'>
+          <p>Edit <span className='text-purple-500 font-bold text-lg'>{props.todo.title}</span></p>
+          <button className='py-2 px-4 bg-red-400 rounded-2xl text-white hover:opacity-50 min-w-20 font-semibold'
+            onClick={() => handleDelete(props.todo.id)}
+          >Delete</button>
+        </div>
+        <div className='w-full h-[2px] bg-purple-500 my-2'></div>
+        <div>
+          <p className='text-lg font-semibold opacity-90 mb-2'>Title</p>
+          <input defaultValue={props.todo.title} className='py-2 px-1 w-full outline-0 border-[1px] border-gray-300 rounded-lg'
+            onChange={(e) => props.setTodoValue(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <p className='text-lg font-semibold opacity-90 mt-2'>Time</p>
+          <input type="time" defaultValue={props.todo.time} className='py-2 px-1'
+            onChange={(e) => props.setTime(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <p className='text-lg font-semibold opacity-90'>Date</p>
+          <input type="date" defaultValue={props.todo.date} className='py-2 px-1'
+            onChange={(e) => props.setDate(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <p className='text-lg font-semibold opacity-90'>Category</p>
+          <select className='py-2 px-1'
+            onChange={(e) => props.setCategory(e.target.value)}
+            defaultValue={props.todo.category.toLowerCase()}
+          >
+            <option value='personal'>Personal</option>
+            <option value='freelance'>Freelance</option>
+            <option value='work'>Work</option>
+          </select>
+        </div>
+
+        <div className='flex justify-between mt-4'>
+          <button className='py-2 px-4 bg-green-400 rounded-2xl text-white hover:opacity-50 min-w-20 font-semibold'
+            onClick={handleSave}
+          >Save</button>
+          
+        </div>
+      </div>
+      
+      <div className='fixed top-0 left-0 w-full h-full bg-gray-400 div1 opacity-50'
+        onClick={handleToggleModal}
+      ></div>
+    </div>
+  )
 }
 
 function App() {
@@ -201,6 +306,7 @@ function App() {
   const [time, setTime] = useState(null)
   const [selectedOption, setSelectedOption] = useState('today')
   const [category, setCategory] = useState('Personal')
+
   useEffect(() => {
     todos.getAll()
       .then(initialValues => setTodolist(initialValues))
@@ -240,6 +346,28 @@ function App() {
       })
   }
 
+  const handleUpdateTodo = (todo) => {
+    const newTodo = {
+      id: todo.id,
+      title: todoValue,
+      complete: todo.complete,
+      time: time,
+      date: date,
+      category: category
+    }
+    todos.update(todo.id, newTodo)
+      .then(response => {
+        setTodolist(todolist.map(p_todo => p_todo.id === todo.id ? response : p_todo))
+      })
+  }
+
+  const handleDeleteTodo = (id) => {
+    todos.deleteTodo(id)
+      .then(response => {
+        setTodolist(todolist.filter(todo => todo.id !== response.id))
+      })
+  }
+
   return (
     <>
       <div className='main-container flex'>
@@ -257,6 +385,8 @@ function App() {
           handleToggleComplete={handleToggleComplete}
           category={category}
           setCategory={setCategory}
+          handleUpdateTodo={handleUpdateTodo}
+          handleDeleteTodo={handleDeleteTodo}
         />
       </div>
     </>

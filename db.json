@@ -1,28 +1,3 @@
 {
-  "todos": [
-    {
-      "id": "1669",
-      "title": "First task work",
-      "complete": false,
-      "time": "11:16",
-      "date": "2024-07-26",
-      "category": "Work"
-    },
-    {
-      "id": "9d65",
-      "title": "Second task freelance",
-      "complete": false,
-      "time": "11:16",
-      "date": "2024-07-26",
-      "category": "Freelance"
-    },
-    {
-      "id": "2dc6",
-      "title": "asdasd",
-      "complete": false,
-      "time": "11:19",
-      "date": "2024-07-26",
-      "category": "Freelance"
-    }
-  ]
+  "todos": []
 }
