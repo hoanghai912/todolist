@@ -1,52 +1,28 @@
 {
   "todos": [
     {
-      "id": "9748",
-      "title": "First task",
-      "category": "work",
+      "id": "1669",
+      "title": "First task work",
       "complete": false,
-      "time": "11:22:20 AM",
-      "date": "Thu Jul 25 2024"
+      "time": "11:16",
+      "date": "2024-07-26",
+      "category": "Work"
     },
     {
-      "id": "c049",
-      "title": "Second task",
-      "category": "work",
-      "complete": true,
-      "time": "11:24:24 AM",
-      "date": "Thu Jul 25 2024"
-    },
-    {
-      "id": "a7d5",
-      "title": "Third task",
-      "category": "personal",
-      "complete": true,
-      "time": "1:14:46 PM",
-      "date": "Thu Jul 25 2024"
-    },
-    {
-      "id": "8e79",
-      "title": "Fourth task",
-      "category": "work",
+      "id": "9d65",
+      "title": "Second task freelance",
       "complete": false,
-      "time": "1:53:20 PM",
-      "date": "Thu Jul 25 2024"
+      "time": "11:16",
+      "date": "2024-07-26",
+      "category": "Freelance"
     },
     {
-      "id": "acd6",
-      "title": "Today task",
-      "category": "work",
+      "id": "2dc6",
+      "title": "asdasd",
       "complete": false,
-      "time": "2:02:39 PM",
-      "date": "Thu Jul 25 2024"
-    },
-    {
-      "id": "6d45",
-      "title": "Today task Today taskToday taskToday taskToday task",
-      "category": "freelance",
-      "complete": false,
-      "time": "2:02:44 PM",
-      "date": "Thu Jul 25 2024"
+      "time": "11:19",
+      "date": "2024-07-26",
+      "category": "Freelance"
     }
   ]
 }
