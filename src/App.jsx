@@ -151,6 +151,14 @@ const Todo = (props) => {
     }
   }
 
+  const handleShowEdit = (e) => {
+    const cls = e.target.className.toString()
+    if (cls.includes("icon") || (e.target.tagName.toString() === "svg") || (e.target.tagName.toString() === "path")) {
+      return
+    }
+    setShowEdit(!showEdit)
+  }
+
   return (
     <>
       {showEdit && <EditModal showEdit={showEdit} setShowEdit={setShowEdit} todo={todo}
@@ -162,19 +170,20 @@ const Todo = (props) => {
                               handleDeleteTodo={props.handleDeleteTodo}/>}
 
       <div style={todo.complete ?styleComplete:null} 
-        className='w-4/5 p-4 bg-white rounded-2xl m-2 grid grid-cols-[5%_60%_auto_auto] gap-x-2 items-center'
-        onClick={() => setShowEdit(!showEdit)}
+        className='w-4/5 p-4 bg-white rounded-2xl m-2 grid grid-cols-[5%_60%_auto_auto] gap-x-2 items-center container'
+
+        onClick={handleShowEdit}
       >
         <div className={`${handleCategory(todo)} justify-self-center w-4 h-4 rounded-full`}></div>
         <div>{todo.title}</div>
         <div className=''>{todo.time}</div>
         {/* <div>{todo.complete}</div> */}
         {todo.complete? <CheckCircleIcon 
-          className={`${todo.complete ? 'text-purple-500' : ''} w-7 h-7 justify-self-end hover:opacity-50 cursor-pointer`}
+          className={`${todo.complete ? 'text-purple-500' : ''} w-7 h-7 justify-self-end hover:opacity-50 cursor-pointer icon`}
           onClick={() => props.handleToggleComplete(todo)}
         /> :
         <div 
-          className='w-7 h-7 bg-white rounded-full border-2 border-gray-300 justify-self-end cursor-pointer hover:opacity-50'
+          className='w-7 h-7 bg-white rounded-full border-2 border-gray-300 justify-self-end cursor-pointer hover:opacity-50 icon'
           onClick={() => props.handleToggleComplete(todo)}
         ></div>}
       </div>
@@ -242,7 +251,7 @@ const EditModal = (props) => {
   } 
 
   return (
-    <div className='w-screen h-screen fixed top-0 left-0 flex justify-center items-center'>
+    <div className='w-screen h-screen fixed top-0 left-0 flex justify-center items-center z-10'>
       <div className='absolute w-1/2 h-fit bg-white z-10 rounded-2xl ps-4 pe-4 pb-4'>
         <div className='flex justify-between mt-4 items-center'>
           <p>Edit <span className='text-purple-500 font-bold text-lg'>{props.todo.title}</span></p>
