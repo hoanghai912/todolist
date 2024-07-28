@@ -17,6 +17,12 @@ const Menu = (props) => {
   const styleSelected = {
     color: '#a855f7'
   }
+
+  const handleChangeFilterCategory = (category) => {
+    props.setFilterCategory(category)
+    props.setSelectedOption('today')
+  }
+
   return (
     <div className='p-4 justify-center'>
       <div className='flex items-center'>
@@ -36,19 +42,36 @@ const Menu = (props) => {
       </div>
       
       <div className='ml-14'>
-        <div className='flex items-center gap-x-2'>
+        <div className='flex items-center gap-x-2 cursor-pointer'
+          onClick={() => handleChangeFilterCategory('personal')}
+        >
           <div className='w-5 h-5 bg-rose-300 rounded-full'></div>
-          <div>Personal</div>
+          <div style={(props.filterCategory.toLowerCase()==='personal'
+                        && props.selectedOption === 'today') ? styleSelected : null}>Personal</div>
         </div>
 
-        <div className='flex items-center gap-x-2'>
+        <div className='flex items-center gap-x-2 cursor-pointer'
+          onClick={() => handleChangeFilterCategory('freelance')}
+        >
           <div className='w-5 h-5 bg-blue-300 rounded-full'></div>
-          <div>Freelance</div>
+          <div style={(props.filterCategory.toLowerCase()==='freelance' 
+                        && props.selectedOption === 'today') ? styleSelected : null}>Freelance</div>
         </div>
 
-        <div className='flex items-center gap-x-2'>
+        <div className='flex items-center gap-x-2 cursor-pointer'
+          onClick={() => handleChangeFilterCategory('work')}
+        >
           <div className='w-5 h-5 bg-yellow-300 rounded-full'></div>
-          <div>Work</div>
+          <div style={(props.filterCategory.toLowerCase()==='work' 
+                        && props.selectedOption === 'today') ? styleSelected : null}>Work</div>
+        </div>
+
+        <div className='flex items-center gap-x-2 cursor-pointer'
+          onClick={() => handleChangeFilterCategory('all')}
+        >
+          <div className='w-5 h-5 bg-gray-300 rounded-full'></div>
+          <div style={(props.filterCategory.toLowerCase()==='all' 
+                        && props.selectedOption === 'today') ? styleSelected : null}>All</div>
         </div>
       </div>
       
@@ -310,16 +333,28 @@ const EditModal = (props) => {
 
 function App() {
   const [todolist, setTodolist] = useState([])
+  const [filteredTodos, setFilteredTodos] = useState([])
   const [todoValue, setTodoValue] = useState('')
   const [date, setDate] = useState(null)
   const [time, setTime] = useState(null)
   const [selectedOption, setSelectedOption] = useState('today')
+  const [filterCategory, setFilterCategory] = useState('all')
   const [category, setCategory] = useState('Personal')
 
   useEffect(() => {
     todos.getAll()
-      .then(initialValues => setTodolist(initialValues))
+      .then(initialValues => {
+        setTodolist(initialValues)
+        setFilteredTodos(initialValues)
+      })
   }, [])
+
+  useEffect(() => {
+    if (filterCategory !== 'all') {
+      setFilteredTodos(todolist.filter(todo => todo.category.toLowerCase() === filterCategory.toLowerCase()))
+    }
+    else setFilteredTodos(todolist)
+  }, [filterCategory, todolist])
 
   
   const handleAddTodo = (event) => {
@@ -383,9 +418,11 @@ function App() {
         <Menu 
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
+          filterCategory={filterCategory}
+          setFilterCategory={setFilterCategory}
         />
         <Container 
-          todos={todolist} 
+          todos={filteredTodos} 
           handleAddTodo={handleAddTodo} 
           setTodoValue={setTodoValue}
           todoValue={todoValue}
