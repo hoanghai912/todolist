@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+@font-face {
+    font-family: 'Poppins-Medium';
+    src:url('./fonts/Poppins-Medium.ttf.woff') format('woff'),
+        url('./fonts/Poppins-Medium.ttf.svg#Poppins-Medium') format('svg'),
+        url('./fonts/Poppins-Medium.ttf.eot'),
+        url('./fonts/Poppins-Medium.ttf.eot?#iefix') format('embedded-opentype'); 
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: 'Poppins-Medium';
+}

@@ -42,7 +42,7 @@ const Menu = (props) => {
       </div>
       
       <div className='ml-14'>
-        <div className='flex items-center gap-x-2 cursor-pointer'
+        <div className='flex items-center gap-x-2 cursor-pointer py-2'
           onClick={() => handleChangeFilterCategory('personal')}
         >
           <div className='w-5 h-5 bg-rose-300 rounded-full'></div>
@@ -50,7 +50,7 @@ const Menu = (props) => {
                         && props.selectedOption === 'today') ? styleSelected : null}>Personal</div>
         </div>
 
-        <div className='flex items-center gap-x-2 cursor-pointer'
+        <div className='flex items-center gap-x-2 cursor-pointer py-2'
           onClick={() => handleChangeFilterCategory('freelance')}
         >
           <div className='w-5 h-5 bg-blue-300 rounded-full'></div>
@@ -58,7 +58,7 @@ const Menu = (props) => {
                         && props.selectedOption === 'today') ? styleSelected : null}>Freelance</div>
         </div>
 
-        <div className='flex items-center gap-x-2 cursor-pointer'
+        <div className='flex items-center gap-x-2 cursor-pointer py-2'
           onClick={() => handleChangeFilterCategory('work')}
         >
           <div className='w-5 h-5 bg-yellow-300 rounded-full'></div>
@@ -66,7 +66,7 @@ const Menu = (props) => {
                         && props.selectedOption === 'today') ? styleSelected : null}>Work</div>
         </div>
 
-        <div className='flex items-center gap-x-2 cursor-pointer'
+        <div className='flex items-center gap-x-2 cursor-pointer py-2'
           onClick={() => handleChangeFilterCategory('all')}
         >
           <div className='w-5 h-5 bg-gray-300 rounded-full'></div>
@@ -144,7 +144,7 @@ const InputTask = (props) => {
           defaultValue={new Date().toISOString().split('T')[0]}
         />
         <div className='flex m-auto w-1/4 justify-center bg-white rounded-b-2xl items-center'>
-          <select className='p-2 rounded-full' onChange={(e) => props.setCategory(e.target.value)}>
+          <select className='p-2 rounded-full w-[70%] text-center' onChange={(e) => props.setCategory(e.target.value)}>
             <option>Personal</option>
             <option>Freelance</option>
             <option>Work</option>
@@ -213,7 +213,7 @@ const Todo = (props) => {
     </>
   )
 }
-const Container = (props) => {
+const TodayTask = (props) => {
   return (
     <>
       <div className='min-h-screen bg-purple-400 flex-1'>
@@ -331,6 +331,41 @@ const EditModal = (props) => {
   )
 }
 
+const Scheduled = (props) => {
+  const onlyUnique = (value, index, array) => {
+    return array.indexOf(value) === index
+  }
+  const dateList = props.todolist.map(element => element.date).filter(onlyUnique).sort()
+  const todoData = dateList.map(element => props.todolist.filter(value => value.date === element))
+  // console.log(todoData)
+  return (
+    <div className='min-h-screen bg-purple-400 flex-1 flex justify-center items-center'>
+      <div className='w-[80%] py-10'>
+      {dateList.map((date,index) => {
+        return (
+          <div key={date} className='pb-10'>
+            <p className='text-2xl text-white mb-4 font-semibold'>{date}</p>
+            {todoData[index].map(todo => {
+              return (
+                <Todo key={todo.id} todo={todo} 
+                      handleToggleComplete={props.handleToggleComplete}
+                      setTodoValue={props.setTodoValue}
+                      setTime={props.setTime}
+                      setDate={props.setDate}
+                      setCategory={props.setCategory}
+                      handleUpdateTodo={props.handleUpdateTodo}
+                      handleDeleteTodo={props.handleDeleteTodo}
+                  />
+              )
+            })}
+          </div>
+        )
+      })}
+      </div>
+    </div>
+  )
+}
+
 function App() {
   const [todolist, setTodolist] = useState([])
   const [filteredTodos, setFilteredTodos] = useState([])
@@ -410,6 +445,10 @@ function App() {
       .then(response => {
         setTodolist(todolist.filter(todo => todo.id !== response.id))
       })
+      .catch(error => {
+        alert('Error: This user has already been deleted')
+        setTodolist(todolist.filter(todo => todo.id !== id))
+      })
   }
 
   return (
@@ -421,7 +460,7 @@ function App() {
           filterCategory={filterCategory}
           setFilterCategory={setFilterCategory}
         />
-        <Container 
+        {selectedOption === 'today' && <TodayTask 
           todos={filteredTodos} 
           handleAddTodo={handleAddTodo} 
           setTodoValue={setTodoValue}
@@ -433,7 +472,17 @@ function App() {
           setCategory={setCategory}
           handleUpdateTodo={handleUpdateTodo}
           handleDeleteTodo={handleDeleteTodo}
-        />
+        />}
+        {selectedOption === 'scheduled' && <Scheduled 
+          todolist={todolist}
+          handleToggleComplete={handleToggleComplete}
+          setTodoValue={setTodoValue}
+          setTime={setTime}
+          setDate={setDate}
+          setCategory={setCategory}
+          handleUpdateTodo={handleUpdateTodo}
+          handleDeleteTodo={handleDeleteTodo}
+        />}
       </div>
     </>
   )

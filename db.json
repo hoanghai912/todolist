@@ -1,3 +1,60 @@
 {
-  "todos": []
+  "todos": [
+    {
+      "id": "c1ce",
+      "title": "Create filter for Todo list application 2",
+      "complete": false,
+      "time": "16:33",
+      "date": "2024-07-21",
+      "category": "Personal"
+    },
+    {
+      "id": "e5c0",
+      "title": "Starting Work task",
+      "complete": false,
+      "time": "16:39",
+      "date": "2024-07-27",
+      "category": "Work"
+    },
+    {
+      "id": "2665",
+      "title": "Next Task now",
+      "complete": false,
+      "time": "16:33",
+      "date": "2024-07-28",
+      "category": "freelance"
+    },
+    {
+      "id": "5b71",
+      "title": "Newwww Test 3/8",
+      "complete": false,
+      "time": "20:19",
+      "date": "2024-08-03",
+      "category": "Personal"
+    },
+    {
+      "id": "8d87",
+      "title": "New2 3/8",
+      "complete": false,
+      "time": "20:19",
+      "date": "2024-08-03",
+      "category": "Personal"
+    },
+    {
+      "id": "d82c",
+      "title": "Neww 28/7",
+      "complete": false,
+      "time": "20:19",
+      "date": "2024-07-28",
+      "category": "Work"
+    },
+    {
+      "id": "201b",
+      "title": "New task 4/8",
+      "complete": false,
+      "time": "16:33",
+      "date": "2024-08-04",
+      "category": "Freelance"
+    }
+  ]
 }
