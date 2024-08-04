@@ -96,6 +96,11 @@ const InputTask = (props) => {
 
   const [showOptions, setShowOptions] = useState(false)
 
+  useEffect(() => {
+    props.setTime(new Date().getHours() + ':' + new Date().getMinutes())
+    props.setDate(formatDate(new Date()))
+  }, [showOptions])
+
   const handleCategory = (category) => {
     switch (category.toLowerCase()) {
       case 'work': return 'bg-yellow-300'
@@ -141,7 +146,7 @@ const InputTask = (props) => {
         />
         <input type='date' onChange={(e) => props.setDate(e.target.value)}
           className='block w-1/4 m-auto px-4 py-3 gap-x-3'
-          defaultValue={new Date().toISOString().split('T')[0]}
+          defaultValue={formatDate(new Date())}
         />
         <div className='flex m-auto w-1/4 justify-center bg-white rounded-b-2xl items-center'>
           <select className='p-2 rounded-full w-[70%] text-center' onChange={(e) => props.setCategory(e.target.value)}>
@@ -258,6 +263,8 @@ const EditModal = (props) => {
     const newState = !props.showEdit
     props.setShowEdit(newState)
     props.setTodoValue('')
+    props.setTime(new Date().getHours() + ':' + new Date().getMinutes())
+    props.setDate(formatDate(new Date()))
   }
 
   const handleSave = () => {
@@ -366,6 +373,16 @@ const Scheduled = (props) => {
   )
 }
 
+const formatDate = (date) => {
+  return date.toISOString().split('T')[0]
+}
+
+const formatTime = (date) => {
+  const _tmpTime = date.toLocaleTimeString('en-GB').split(':')
+  const currentTime = _tmpTime[0] + ':' + _tmpTime[1]
+  return currentTime
+}
+
 function App() {
   const [todolist, setTodolist] = useState([])
   const [filteredTodos, setFilteredTodos] = useState([])
@@ -400,14 +417,11 @@ function App() {
     }
     
     const currentDateTime = new Date()
-    const currentDate = currentDateTime.toISOString().split('T')[0]
-    const _tmpTime = currentDateTime.toLocaleTimeString('en-GB').split(':')
-    const currentTime = _tmpTime[0] + ':' + _tmpTime[1]
     const newTodo = {
       title: todoValue,
       complete: false,
-      time: time? time : currentTime,
-      date: date? date : currentDate,
+      time: time? time : formatTime(currentDateTime),
+      date: date? date : formatDate(currentDateTime),
       category: category
     }
     todos.create(newTodo)
