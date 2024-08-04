@@ -55,6 +55,22 @@
       "time": "16:33",
       "date": "2024-08-04",
       "category": "Freelance"
+    },
+    {
+      "id": "fb03",
+      "title": "New Task2 4/8",
+      "complete": false,
+      "time": "19:23",
+      "date": "2024-08-04",
+      "category": "work"
+    },
+    {
+      "id": "4c14",
+      "title": "New Taskkkk 3/8",
+      "complete": false,
+      "time": "09:00",
+      "date": "2024-08-03",
+      "category": "Personal"
     }
   ]
 }

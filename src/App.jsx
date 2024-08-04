@@ -219,6 +219,8 @@ const Todo = (props) => {
   )
 }
 const TodayTask = (props) => {
+  const currentDate = formatDate(new Date())
+  const todayTodos = props.todos.filter(todo => todo.date === currentDate)
   return (
     <>
       <div className='min-h-screen bg-purple-400 flex-1'>
@@ -234,7 +236,7 @@ const TodayTask = (props) => {
         />
     
         <div className='flex flex-col items-center'>
-          {props.todos.map(todo => <Todo key={todo.id} todo={todo} 
+          {todayTodos.map(todo => <Todo key={todo.id} todo={todo} 
                                         handleToggleComplete={props.handleToggleComplete}
                                         setTodoValue={props.setTodoValue}
                                         setTime={props.setTime}
