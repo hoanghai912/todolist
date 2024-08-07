@@ -3,7 +3,7 @@
     {
       "id": "c1ce",
       "title": "Create filter for Todo list application 2",
-      "complete": false,
+      "complete": true,
       "time": "16:33",
       "date": "2024-07-21",
       "category": "Personal"
@@ -43,7 +43,7 @@
     {
       "id": "d82c",
       "title": "Neww 28/7",
-      "complete": false,
+      "complete": true,
       "time": "20:19",
       "date": "2024-07-28",
       "category": "Work"
@@ -71,6 +71,14 @@
       "time": "09:00",
       "date": "2024-08-03",
       "category": "Personal"
+    },
+    {
+      "id": "0bbe",
+      "title": "Create new Task for web application",
+      "complete": false,
+      "time": "20:41",
+      "date": "2024-08-07",
+      "category": "work"
     }
   ]
 }
