@@ -100,7 +100,7 @@ Project Link: [https://github.com/hoanghai912/todolist](https://github.com/hoang
 [license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/haihoang911/
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: images/screen1.PNG
 
 
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
