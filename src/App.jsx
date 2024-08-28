@@ -6,6 +6,7 @@ import './index.css'
 import Menu from './components/Menu'
 import TodayTask from './components/TodayTask'
 import Scheduled from './components/Scheduled'
+import KanbanBoard from './components/KanbanBoard'
 
 const formatDate = (date) => {
   return date.toISOString().split('T')[0]
@@ -86,7 +87,7 @@ function App() {
       .then(response => {
         setTodolist(todolist.map(p_todo => p_todo.id === todo.id ? response : p_todo))
       })
-      .catch(error => {
+      .catch(() => {
         alert('Error: This user has already been deleted')
         setTodolist(todolist.filter(p_todo => p_todo.id !== todo.id))
       })
@@ -94,10 +95,10 @@ function App() {
 
   const handleDeleteTodo = (id) => {
     todos.deleteTodo(id)
-      .then(response => {
+      .then(() => {
         setTodolist(todolist.filter(todo => todo.id !== id))
       })
-      .catch(error => {
+      .catch(() => {
         alert('Error: This user has already been deleted')
         setTodolist(todolist.filter(todo => todo.id !== id))
       })
@@ -135,6 +136,7 @@ function App() {
           handleUpdateTodo={handleUpdateTodo}
           handleDeleteTodo={handleDeleteTodo}
         />}
+        {/* {selectedOption === 'settings' && <KanbanBoard />} */}
       </div>
     </>
   )

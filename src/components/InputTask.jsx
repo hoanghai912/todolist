@@ -36,10 +36,10 @@ const InputTask = (props) => {
     return (
         <div className='my-10'>
             <form
-                className='grid grid-cols-[6%_65%_auto] bg-white w-5/6 m-auto px-4 py-3 gap-x-3 rounded-2xl'
+                className='grid grid-cols-[90%_auto] md:grid-cols-[6%_65%_auto] bg-white w-5/6 m-auto px-4 py-3 gap-x-3 rounded-2xl'
                 onSubmit={props.handleAddTodo}
             >
-                <div className='flex items-center justify-around'>
+                <div className='items-center justify-around hidden md:flex'>
                     <div style={styles.dot} className="bg-rose-300"></div>
                     <div style={styles.dot} className="bg-blue-300"></div>
                     <div style={styles.dot} className="bg-yellow-300"></div>
