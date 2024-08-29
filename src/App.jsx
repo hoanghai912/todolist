@@ -107,7 +107,7 @@ function App() {
   }
 
   const handleChangeStatus = (todo, p_status) => {
-    const updatedTodo = { ...todo, status: p_status }
+    const updatedTodo = { ...todo, status: p_status, complete: p_status === 'done' ? true : false }
     todos.update(todo.id, updatedTodo)
       .then(responseTodo => {
         setTodolist(todolist.map(todo => todo.id === responseTodo.id ? responseTodo : todo))
