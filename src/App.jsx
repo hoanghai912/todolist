@@ -6,7 +6,6 @@ import './index.css'
 import Menu from './components/Menu'
 import TodayTask from './components/TodayTask'
 import Scheduled from './components/Scheduled'
-import KanbanBoard from './components/KanbanBoard'
 
 const formatDate = (date) => {
   return date.toISOString().split('T')[0]
@@ -27,6 +26,7 @@ function App() {
   const [selectedOption, setSelectedOption] = useState('today')
   const [filterCategory, setFilterCategory] = useState('all')
   const [category, setCategory] = useState('Personal')
+  const [typeScheduled, setTypeScheduled] = useState('list task')
 
   useEffect(() => {
     todos.getAll()
@@ -57,7 +57,8 @@ function App() {
       complete: false,
       time: time? time : formatTime(currentDateTime),
       date: date? date : formatDate(currentDateTime),
-      category: category
+      category: category,
+      status: 'to-do'
     }
     todos.create(newTodo)
       .then(response => {
@@ -67,7 +68,7 @@ function App() {
   }
 
   const handleToggleComplete = (todo) => {
-    const updatedTodo = { ...todo, complete: !todo.complete }
+    const updatedTodo = { ...todo, complete: !todo.complete, status: !todo.complete === true ? 'done' : 'to-do' }
     todos.update(todo.id, updatedTodo)
       .then(response => {
         setTodolist(todolist.map(p_todo => p_todo.id === todo.id ? response : p_todo))
@@ -81,7 +82,8 @@ function App() {
       complete: todo.complete,
       time: time,
       date: date,
-      category: category
+      category: category,
+      status: todo.status
     }
     todos.update(todo.id, newTodo)
       .then(response => {
@@ -104,6 +106,15 @@ function App() {
       })
   }
 
+  const handleChangeStatus = (todo, p_status) => {
+    const updatedTodo = { ...todo, status: p_status }
+    todos.update(todo.id, updatedTodo)
+      .then(responseTodo => {
+        setTodolist(todolist.map(todo => todo.id === responseTodo.id ? responseTodo : todo))
+      })
+      .catch(error => console.log(error))
+  }
+
   return (
     <>
       <div className='main-container flex'>
@@ -112,6 +123,8 @@ function App() {
           setSelectedOption={setSelectedOption}
           filterCategory={filterCategory}
           setFilterCategory={setFilterCategory}
+          typeScheduled={typeScheduled}
+          setTypeScheduled={setTypeScheduled}
         />
         {selectedOption === 'today' && <TodayTask 
           todos={filteredTodos} 
@@ -135,6 +148,8 @@ function App() {
           setCategory={setCategory}
           handleUpdateTodo={handleUpdateTodo}
           handleDeleteTodo={handleDeleteTodo}
+          typeScheduled={typeScheduled}
+          handleChangeStatus={handleChangeStatus}
         />}
         {/* {selectedOption === 'settings' && <KanbanBoard />} */}
       </div>

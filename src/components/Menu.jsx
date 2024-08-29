@@ -1,3 +1,4 @@
+
 import { UserCircleIcon, 
   CalendarIcon,
   CalendarDaysIcon,
@@ -5,6 +6,8 @@ import { UserCircleIcon,
 } from "@heroicons/react/24/outline"
 
 const Menu = (props) => {
+
+
   const styleSelected = {
     color: '#a855f7'
   }
@@ -12,6 +15,12 @@ const Menu = (props) => {
   const handleChangeFilterCategory = (category) => {
     props.setFilterCategory(category)
     props.setSelectedOption('today')
+  }
+
+  const handleChangeTypeScheduled = (text) => {
+    const type = text.toLowerCase()
+    props.setTypeScheduled(type)
+    props.setSelectedOption('scheduled')
   }
 
   return (
@@ -73,6 +82,19 @@ const Menu = (props) => {
         <CalendarDaysIcon className='w-7 h-7 mr-3' />
         <p className='text-lg'>Scheduled tasks</p>
       </div>
+
+      <div className="ml-14">
+        {['List Task', 'Kanban Board'].map((text) => {
+          return (
+            <p key={text}
+              className="py-2 cursor-pointer"
+              onClick={() => handleChangeTypeScheduled(text)}
+              style={props.typeScheduled === text.toLowerCase() && props.selectedOption === 'scheduled' ? styleSelected : null}
+            >{text}</p>
+          )
+        })}
+      </div>
+
       <div className='flex items-center p-5 cursor-pointer' style={props.selectedOption === 'settings' ? styleSelected : null}
         onClick={() => props.setSelectedOption('settings')}
       >
