@@ -1,19 +1,38 @@
-import { useMemo, useRef } from "react"
+import { useMemo, useRef, useState } from "react"
 
+import EditModal from "./EditModal"
 
 const TaskCard = (props) => {
+  const [showEdit, setShowEdit] = useState(false)
+  
   const handleDragStart = (event) => {
     props.draggedItem.current.dom = event.target
     props.draggedItem.current.component = props.task
   }
+
+  const handleShowEdit = () => {
+    setShowEdit(!showEdit)
+  }
   return (
-    <div className={`h-16 w-11/12 bg-white border-2 m-auto my-2 p-2 shadow-sm rounded-lg last:mb-5 cursor-pointer`}
-      onDragStart={handleDragStart}
-      onDragEnd={() => props.draggedItem.current = {dom:null, component:null}}
-      draggable={true}
-    >
-      <p>{props.task.title}</p>
-    </div>
+    <>
+      {showEdit && <EditModal showEdit={showEdit} setShowEdit={setShowEdit} todo={props.task}
+        setTodoValue={props.setTodoValue}
+        setTime={props.setTime}
+        setDate={props.setDate}
+        setCategory={props.setCategory}
+        handleUpdateTodo={props.handleUpdateTodo}
+        handleDeleteTodo={props.handleDeleteTodo}/>}
+
+      <div className={`h-16 w-11/12 bg-white border-2 m-auto my-2 p-2 shadow-sm rounded-lg last:mb-5 cursor-pointer relative overflow-hidden`}
+        onDragStart={handleDragStart}
+        onDragEnd={() => props.draggedItem.current = {dom:null, component:null}}
+        draggable={true}
+        onClick={handleShowEdit}
+      >
+        <p className="overflow-hidden truncate">{props.task.title}</p>
+        <p className="text-xs absolute bottom-1 text-gray-400">{props.task.date}</p>
+      </div>
+    </>
   )
 }
 
@@ -47,7 +66,14 @@ const TaskStatusField = (props) => {
           onDragLeave={handleDragLeave}
         >
           {props.tasks ? props.tasks.map((task) => {
-            return <TaskCard task={task} key={task.id} draggedItem={props.draggedItem} />
+            return <TaskCard task={task} key={task.id} draggedItem={props.draggedItem} 
+              setTodoValue={props.setTodoValue}
+              setTime={props.setTime}
+              setDate={props.setDate}
+              setCategory={props.setCategory}
+              handleUpdateTodo={props.handleUpdateTodo}
+              handleDeleteTodo={props.handleDeleteTodo}
+            />
           }) : null}
         </div>
       </div>
@@ -68,12 +94,32 @@ const KanbanBoard = (props) => {
   // const doingTask = filterTasks('doing')
   // const doneTask = filterTasks('done')
 
+  const switchTasks = {
+    'to-do': todoTask,
+    'doing': doingTask,
+    'done': doneTask
+  }
   return (
     <>
       <div className="min-h-screen bg-purple-400 flex-1 relative flex justify-around flex-col items-center md:flex-wrap md:flex-row md:items-start">
-        <TaskStatusField status='To-Do' tasks={todoTask} draggedItem={draggedItem} handleChangeStatus={props.handleChangeStatus}/>
+        {/* <TaskStatusField status='To-Do' tasks={todoTask} draggedItem={draggedItem} handleChangeStatus={props.handleChangeStatus}/>
         <TaskStatusField status='Doing' tasks={doingTask} draggedItem={draggedItem} handleChangeStatus={props.handleChangeStatus}/>
-        <TaskStatusField status='Done' tasks={doneTask} draggedItem={draggedItem} handleChangeStatus={props.handleChangeStatus}/>
+        <TaskStatusField status='Done' tasks={doneTask} draggedItem={draggedItem} handleChangeStatus={props.handleChangeStatus}/> */}
+        {['To-do', 'Doing', 'Done'].map(status => {
+          return <TaskStatusField 
+            key={status} 
+            status={status} 
+            tasks={switchTasks[status.toLowerCase()]} 
+            draggedItem={draggedItem} 
+            handleChangeStatus={props.handleChangeStatus}
+            setTodoValue={props.setTodoValue}
+            setTime={props.setTime}
+            setDate={props.setDate}
+            setCategory={props.setCategory}
+            handleUpdateTodo={props.handleUpdateTodo}
+            handleDeleteTodo={props.handleDeleteTodo}
+          />
+        })}
       </div>
     </>
   )

@@ -14,6 +14,12 @@ const Scheduled = (props) => {
         <KanbanBoard 
           todolist={props.todolist} 
           handleChangeStatus={props.handleChangeStatus}
+          setTodoValue={props.setTodoValue}
+          setTime={props.setTime}
+          setDate={props.setDate}
+          setCategory={props.setCategory}
+          handleUpdateTodo={props.handleUpdateTodo}
+          handleDeleteTodo={props.handleDeleteTodo}
         />
         : 
         (
