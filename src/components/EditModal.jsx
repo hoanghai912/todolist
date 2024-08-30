@@ -16,6 +16,16 @@ const EditModal = (props) => {
     props.setTime(props.todo.time)
     props.setDate(props.todo.date)
     props.setCategory(props.todo.category)
+
+    const closeModal = (e) => {
+      if (e.key === "Escape") {
+        handleToggleModal()
+      }
+    }
+    window.addEventListener('keydown', closeModal)
+    return () => {
+      window.removeEventListener('keydown', closeModal)
+    }
   }, [])
 
   const handleToggleModal = () => {
