@@ -44,6 +44,12 @@ This project focuses on building a Todo-list application using ReactJS and NodeJ
 - I have deployed the project to cloud service [Render.com](Render.com). The link of the web application is placed on top of the README.md. High recommended you to visit the webiste to see the result of the application.
 - Issue: The application still doesn't have best performance because the delay of the server both [Render.com](Render.com) and [MongoDB Atlas](https://www.mongodb.com/products/platform/atlas-database). So it will take more time to start and work correctly.
 
+**Update of version 3**:
+- In this version, the Scheduled Screen has two options to view all tasks.
+  - The first option is ```List task```: This is the default view, which lists all tasks to screen from top to bottom.
+  - The second option is ```Kanban board```: This is a new feature that helps users manage their tasks easily. Users can change the status of task between ```To-do```, ```Doing```, and ```Done```.
+- I fixed the issue from version 2 related to the backend. Now you can clone and run it without any edit file except the API key ```.env```
+
 ### Built With
 <div id="build-with"></div>
 
