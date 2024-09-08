@@ -7,6 +7,8 @@ import Menu from './components/Menu'
 import TodayTask from './components/TodayTask'
 import Scheduled from './components/Scheduled'
 
+import { Bars3Icon } from '@heroicons/react/24/outline'
+
 const formatDate = (date) => {
   return date.toISOString().split('T')[0]
 }
@@ -15,6 +17,28 @@ const formatTime = (date) => {
   const _tmpTime = date.toLocaleTimeString('en-GB').split(':')
   const currentTime = _tmpTime[0] + ':' + _tmpTime[1]
   return currentTime
+}
+
+const MenuBars = () => {
+  const handleClick = () => {
+    const menuElement = document.getElementById('menu')
+    menuElement.classList.toggle('hidden')
+    menuElement.classList.toggle('absolute')
+    menuElement.classList.toggle('h-screen')
+    menuElement.classList.toggle('z-10')
+    const menuBar = document.getElementsByClassName('menubar')[0]
+    menuBar.classList.toggle('top-5')
+    menuBar.classList.toggle('bottom-2')
+    menuBar.classList.toggle('bg-red-500')
+  }
+
+  return (
+    <div className='menubar absolute top-5 left-6 bg-white rounded-lg p-1 hover:scale-110 cursor-pointer md:hidden z-20'
+      onClick={handleClick}
+    >
+      <Bars3Icon className='w-10 h-10' />
+    </div>
+  )
 }
 
 function App() {
@@ -34,6 +58,7 @@ function App() {
         setTodolist(initialValues)
         setFilteredTodos(initialValues)
       })
+
   }, [])
 
   useEffect(() => {
@@ -43,20 +68,20 @@ function App() {
     else setFilteredTodos(todolist)
   }, [filterCategory, todolist])
 
-  
+
   const handleAddTodo = (event) => {
     event.preventDefault()
     if (!todoValue) {
       alert('Please input your todo')
       return
     }
-    
+
     const currentDateTime = new Date()
     const newTodo = {
       title: todoValue,
       complete: false,
-      time: time? time : formatTime(currentDateTime),
-      date: date? date : formatDate(currentDateTime),
+      time: time ? time : formatTime(currentDateTime),
+      date: date ? date : formatDate(currentDateTime),
       category: category,
       status: 'to-do'
     }
@@ -118,17 +143,22 @@ function App() {
   return (
     <>
       <div className='main-container flex'>
-        <Menu 
-          selectedOption={selectedOption}
-          setSelectedOption={setSelectedOption}
-          filterCategory={filterCategory}
-          setFilterCategory={setFilterCategory}
-          typeScheduled={typeScheduled}
-          setTypeScheduled={setTypeScheduled}
-        />
-        {selectedOption === 'today' && <TodayTask 
-          todos={filteredTodos} 
-          handleAddTodo={handleAddTodo} 
+        <MenuBars />
+
+        <div className='hidden md:block bg-white' id="menu">
+          <Menu
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
+            filterCategory={filterCategory}
+            setFilterCategory={setFilterCategory}
+            typeScheduled={typeScheduled}
+            setTypeScheduled={setTypeScheduled}
+          />
+        </div>
+        
+        {selectedOption === 'today' && <TodayTask
+          todos={filteredTodos}
+          handleAddTodo={handleAddTodo}
           setTodoValue={setTodoValue}
           todoValue={todoValue}
           setDate={setDate}
@@ -139,7 +169,7 @@ function App() {
           handleUpdateTodo={handleUpdateTodo}
           handleDeleteTodo={handleDeleteTodo}
         />}
-        {selectedOption === 'scheduled' && <Scheduled 
+        {selectedOption === 'scheduled' && <Scheduled
           todolist={todolist}
           handleToggleComplete={handleToggleComplete}
           setTodoValue={setTodoValue}

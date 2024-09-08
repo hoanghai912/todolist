@@ -101,10 +101,7 @@ const KanbanBoard = (props) => {
   }
   return (
     <>
-      <div className="min-h-screen bg-purple-400 flex-1 relative flex justify-around flex-col items-center md:flex-wrap md:flex-row md:items-start">
-        {/* <TaskStatusField status='To-Do' tasks={todoTask} draggedItem={draggedItem} handleChangeStatus={props.handleChangeStatus}/>
-        <TaskStatusField status='Doing' tasks={doingTask} draggedItem={draggedItem} handleChangeStatus={props.handleChangeStatus}/>
-        <TaskStatusField status='Done' tasks={doneTask} draggedItem={draggedItem} handleChangeStatus={props.handleChangeStatus}/> */}
+      <div className="bg-purple-400 flex-1 relative flex justify-around flex-col items-center md:flex-wrap md:flex-row md:items-start">
         {['To-do', 'Doing', 'Done'].map(status => {
           return <TaskStatusField 
             key={status} 

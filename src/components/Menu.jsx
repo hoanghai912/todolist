@@ -5,8 +5,13 @@ import { UserCircleIcon,
   Cog6ToothIcon,
 } from "@heroicons/react/24/outline"
 
+import { useEffect } from "react"
 const Menu = (props) => {
 
+  useEffect(() => {
+
+    return () => { props.setIsShowMenu(false) }
+  }, [])
 
   const styleSelected = {
     color: '#a855f7'
@@ -24,7 +29,7 @@ const Menu = (props) => {
   }
 
   return (
-    <div className='p-4 justify-center hidden md:block'>
+    <div className='p-4 justify-center bg-white'>
       <div className='flex items-center'>
         <UserCircleIcon className='w-16 h-16 mx-3 opacity-60' />
         <div>
