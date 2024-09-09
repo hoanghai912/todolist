@@ -51,7 +51,7 @@ const EditModal = (props) => {
 
   return (
     <div className='w-screen h-screen fixed top-0 left-0 flex justify-center items-center z-10'>
-      <div className='absolute w-1/2 h-fit bg-white z-10 rounded-2xl ps-4 pe-4 pb-4'>
+      <div className='absolute md:w-1/2 h-fit bg-white z-10 rounded-2xl ps-4 pe-4 pb-4'>
         <div className='flex justify-between mt-4 items-center'>
           <p>Edit <span className='text-purple-500 font-bold text-lg'>{props.todo.title}</span></p>
           <button className='py-2 px-4 bg-red-400 rounded-2xl text-white hover:opacity-50 min-w-20 font-semibold'

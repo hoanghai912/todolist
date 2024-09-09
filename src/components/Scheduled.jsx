@@ -23,7 +23,7 @@ const Scheduled = (props) => {
         />
         : 
         (
-          <div className='w-[80%] py-10'>
+          <div className='w-[80%] py-10 mt-20 md:mt-0'>
             {dateList.map((date, index) => {
               return (
                 <div key={date} className='pb-10'>

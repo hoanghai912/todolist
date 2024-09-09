@@ -57,7 +57,7 @@ const TaskStatusField = (props) => {
   }
   return (
     <>
-      <div className="h-fit min-h-48 w-56 md:w-1/4 bg-[#f7f8f9] shadow-lg flex flex-col rounded-md mt-4">
+      <div className="h-fit min-h-48 w-56 md:w-1/4 bg-[#f7f8f9] shadow-lg flex flex-col rounded-xl md:rounded-md mt-4">
         <p className="text-center p-2 font-semibold">{props.status}</p>
         <div className="dragzone flex flex-col h-full grow rounded-md"
           onDrop={handleAddTask}
@@ -101,7 +101,7 @@ const KanbanBoard = (props) => {
   }
   return (
     <>
-      <div className="bg-purple-400 flex-1 relative flex justify-around flex-col items-center md:flex-wrap md:flex-row md:items-start">
+      <div className="pb-10 mt-20 bg-purple-400 flex-1 relative flex justify-around flex-col items-center md:flex-wrap md:flex-row md:items-start md:mt-0">
         {['To-do', 'Doing', 'Done'].map(status => {
           return <TaskStatusField 
             key={status} 

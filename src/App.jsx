@@ -6,8 +6,7 @@ import './index.css'
 import Menu from './components/Menu'
 import TodayTask from './components/TodayTask'
 import Scheduled from './components/Scheduled'
-
-import { Bars3Icon } from '@heroicons/react/24/outline'
+import MenuBars from './components/MenuBars'
 
 const formatDate = (date) => {
   return date.toISOString().split('T')[0]
@@ -17,28 +16,6 @@ const formatTime = (date) => {
   const _tmpTime = date.toLocaleTimeString('en-GB').split(':')
   const currentTime = _tmpTime[0] + ':' + _tmpTime[1]
   return currentTime
-}
-
-const MenuBars = () => {
-  const handleClick = () => {
-    const menuElement = document.getElementById('menu')
-    menuElement.classList.toggle('hidden')
-    menuElement.classList.toggle('absolute')
-    menuElement.classList.toggle('h-screen')
-    menuElement.classList.toggle('z-10')
-    const menuBar = document.getElementsByClassName('menubar')[0]
-    menuBar.classList.toggle('top-5')
-    menuBar.classList.toggle('bottom-2')
-    menuBar.classList.toggle('bg-red-500')
-  }
-
-  return (
-    <div className='menubar absolute top-5 left-6 bg-white rounded-lg p-1 hover:scale-110 cursor-pointer md:hidden z-20'
-      onClick={handleClick}
-    >
-      <Bars3Icon className='w-10 h-10' />
-    </div>
-  )
 }
 
 function App() {
@@ -51,6 +28,7 @@ function App() {
   const [filterCategory, setFilterCategory] = useState('all')
   const [category, setCategory] = useState('Personal')
   const [typeScheduled, setTypeScheduled] = useState('list task')
+  const [isShowMenuOverlay, setIsShowMenuOverlay] = useState(false)
 
   useEffect(() => {
     todos.getAll()
@@ -140,10 +118,24 @@ function App() {
       .catch(error => console.log(error))
   }
 
+  const handleClickMenuBars = () => {
+    const menuElement = document.getElementById('menu')
+    menuElement.classList.toggle('hidden')
+    menuElement.classList.toggle('fixed')
+    menuElement.classList.toggle('h-screen')
+    menuElement.classList.toggle('z-10')
+    const menuBar = document.getElementsByClassName('menubar')[0]
+    menuBar.classList.toggle('top-5')
+    menuBar.classList.toggle('bottom-2')
+    menuBar.classList.toggle('bg-red-500')
+    menuBar.classList.toggle('bg-white')
+    setIsShowMenuOverlay(!isShowMenuOverlay)
+  }
+
   return (
     <>
       <div className='main-container flex'>
-        <MenuBars />
+        <MenuBars handleClickMenuBars={handleClickMenuBars}/>
 
         <div className='hidden md:block bg-white' id="menu">
           <Menu
@@ -182,6 +174,7 @@ function App() {
           handleChangeStatus={handleChangeStatus}
         />}
         {/* {selectedOption === 'settings' && <KanbanBoard />} */}
+        {isShowMenuOverlay && <div className='bg-gray-300 w-full h-full fixed top-0 opacity-70' onClick={handleClickMenuBars}></div>}
       </div>
     </>
   )

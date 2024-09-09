@@ -37,7 +37,7 @@ const Todo = (props) => {
         handleDeleteTodo={props.handleDeleteTodo}/>}
   
       <div style={todo.complete ?styleComplete:null} 
-        className='w-4/5 p-4 bg-white rounded-2xl m-2 grid grid-cols-[5%_60%_auto_auto] gap-x-2 items-center container'
+        className='w-4/5 p-4 bg-white rounded-2xl m-2 grid grid-cols-[5%_50%_auto_auto] md:grid-cols-[5%_60%_auto_auto] gap-x-2 items-center container'
   
         onClick={handleShowEdit}
       >
@@ -52,7 +52,8 @@ const Todo = (props) => {
           <div 
             className='w-7 h-7 bg-white rounded-full border-2 border-gray-300 justify-self-end cursor-pointer hover:opacity-50 icon'
             onClick={() => props.handleToggleComplete(todo)}
-          ></div>}
+          ></div>
+        }
       </div>
     </>
   )
